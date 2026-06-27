@@ -1,13 +1,13 @@
 // src/pages/HomePage.js
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { getArticles } from '../services/articleService';
 import { ArticleCard } from '../components/ArticleCard';
+import FeaturedSlider from '../components/FeaturedSlider'; // استيراد السلايدر
 
 export default function HomePage() {
   const { t, i18n } = useTranslation();
-  const navigate = useNavigate();
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeLang, setActiveLang] = useState('en');
@@ -27,9 +27,13 @@ export default function HomePage() {
     setLoading(false);
   };
 
+  // التقسيم القديم الأصلي للمقالات بالأسفل (دون أي تغيير)
   const featured = articles[0];
   const secondary = articles.slice(1, 4);
   const rest = articles.slice(4);
+
+  // نأخذ أول 4 مقالات لتعرض في السلايدر العلوي أيضاً كإعلان متحرك
+  const sliderArticles = articles.slice(0, 4);
 
   const LANGS = [
     { code: 'en', label: 'English' },
@@ -41,6 +45,7 @@ export default function HomePage() {
     { slug: 'explained', label: t('explained') },
     { slug: 'opinion', label: t('opinion') },
     { slug: 'scientific-research', label: t('scientificResearch') },
+    { slug: 'culture', label: t('culture') },
   ];
 
   return (
@@ -92,6 +97,12 @@ export default function HomePage() {
         </div>
       </div>
 
+      {/* الهيدر المتحرك يظهر هنا في الأعلى تماماً فقط */}
+      {!loading && sliderArticles.length > 0 && (
+        <FeaturedSlider articles={sliderArticles} currentLang={activeLang} />
+      )}
+
+      {/* المحتوى القديم بالأسفل كما هو بالملّي */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
         {loading ? (
           <div className="text-center py-20">
@@ -102,18 +113,10 @@ export default function HomePage() {
           <div className="text-center py-20">
             <p className="font-serif text-2xl text-gray-400">{t('noArticles')}</p>
             <p className="mt-2 text-sm font-sans text-gray-400">Try switching to a different language</p>
-            <div className="flex justify-center gap-2 mt-4">
-              {LANGS.filter(l => l.code !== activeLang).map(l => (
-                <button key={l.code} onClick={() => setActiveLang(l.code)}
-                  className="px-4 py-2 text-sm font-sans border border-navy-700 text-navy-700 hover:bg-navy-700 hover:text-white transition-colors">
-                  {l.label}
-                </button>
-              ))}
-            </div>
           </div>
         ) : (
           <>
-            {/* Main layout: featured + secondary */}
+            {/* تصميم المقالات الأصلي (featured + secondary) */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10">
               {/* Featured */}
               <div className="lg:col-span-2">
@@ -138,7 +141,7 @@ export default function HomePage() {
               <div className="h-0.5 bg-navy-700 flex-1" />
             </div>
 
-            {/* Grid of remaining articles */}
+            {/* باقي المقالات الـ Grid */}
             {rest.length > 0 && (
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-4">
                 {rest.map(a => (
@@ -146,21 +149,6 @@ export default function HomePage() {
                 ))}
               </div>
             )}
-
-            {/* Category quick links */}
-            <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-0 border border-navy-700 divide-x divide-navy-700">
-              {CATS.map((cat, i) => (
-                <Link
-                  key={cat.slug}
-                  to={`/${activeLang}/${cat.slug}`}
-                  className="group p-6 hover:bg-navy-700 transition-colors"
-                >
-                  <span className="text-xs font-mono font-bold text-gray-400 group-hover:text-navy-200 uppercase tracking-widest">Explore</span>
-                  <h3 className="font-serif text-xl font-bold text-navy-800 group-hover:text-white mt-1 mb-2">{cat.label}</h3>
-                  <span className="text-xs font-sans text-navy-500 group-hover:text-navy-200">Browse all articles →</span>
-                </Link>
-              ))}
-            </div>
           </>
         )}
       </div>

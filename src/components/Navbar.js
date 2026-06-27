@@ -63,14 +63,19 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop: Categories */}
+ {/* Desktop: Categories */}
           <div className="hidden md:flex items-center gap-1">
-            {['explained', 'opinion', 'scientific-research', 'Arts & Culture'].map((cat) => (
+            {['explained', 'opinion', 'scientific-research', 'culture'].map((cat) => (
               <Link
                 key={cat}
                 to={`/${currentArticleLang}/${cat}`}
-                className="px-3 py-1.5 text-sm font-sans font-medium text-navy-700 hover:text-accent hover:bg-navy-50 rounded transition-colors capitalize"
+                className="px-3 py-1.5 text-sm font-sans font-medium text-navy-700 hover:text-accent hover:bg-navy-50 rounded transition-colors"
               >
-                {t(cat === 'scientific-research' ? 'scientificResearch' : cat)}
+                {cat === 'scientific-research' 
+                  ? t('scientificResearch') 
+                  : cat === 'culture' 
+                    ? t('culture') 
+                    : t(cat)}
               </Link>
             ))}
           </div>
@@ -174,7 +179,7 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile menu */}
+      {/* Mobile menu content */}
       {mobileOpen && (
         <div className="md:hidden border-t border-gray-100 bg-white px-4 py-3 space-y-2">
           <form onSubmit={handleSearch} className="flex">
@@ -187,7 +192,7 @@ export default function Navbar() {
             />
             <button type="submit" className="px-3 py-1.5 bg-navy-700 text-white text-sm">→</button>
           </form>
-          {['explained', 'opinion', 'scientific-research'].map(cat => (
+          {['explained', 'opinion', 'scientific-research', 'culture'].map(cat => (
             <Link
               key={cat}
               to={`/${currentArticleLang}/${cat}`}

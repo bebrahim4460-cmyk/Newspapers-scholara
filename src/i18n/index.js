@@ -17,10 +17,11 @@ const resources = {
       adminDashboard: 'Admin Dashboard',
       writerDashboard: 'Writer Dashboard',
 
-      // Categories
+      //--Categories
       explained: 'Explained',
       opinion: 'Opinion',
-      scientificResearch: 'Scientific Research',
+      scientificResearch: 'Scientific-Research',
+      culture: 'Art & Culture',
 
       // Auth
       email: 'Email',
@@ -60,6 +61,25 @@ const resources = {
       approved: 'Approved',
       rejected: 'Rejected',
       edit: 'Edit',
+
+      // Multimedia (New)
+      podcastSection: 'Podcast Section',
+      videoSection: 'Video Section',
+      podcastUrlPlaceholder: 'Podcast link (Spotify, Soundcloud..)',
+      videoUrlPlaceholder: 'Video link (YouTube, Vimeo..)',
+      podcastTitlePlaceholder: 'Podcast Title',
+      videoTitlePlaceholder: 'Video Title',
+      podcastDescPlaceholder: 'Short description for the podcast...',
+      videoDescPlaceholder: 'Short description for the video...',
+      uploadPodcastImg: 'Upload podcast cover from device:',
+      uploadVideoImg: 'Upload video thumbnail from device:',
+      mediaPositionLabel: 'Where would you like to display the media inside the article?',
+      positionBottom: 'At the bottom (Below article text)',
+      positionTop: 'At the top (Above article text)',
+      relatedPodcast: 'related podcast',
+      relatedVideos: 'related videos',
+      multimediaTitle: 'Add Multimedia Blocks (Optional)',
+      imageAlreadyUploaded: 'An image is already uploaded',
 
       // Admin
       pendingArticles: 'Pending Articles',
@@ -143,6 +163,25 @@ const resources = {
       rejected: 'مرفوض',
       edit: 'تعديل',
 
+      // Multimedia (New)
+      podcastSection: 'قسم البودكاست',
+      videoSection: 'قسم الفيديو',
+      podcastUrlPlaceholder: 'رابط البودكاست (Spotify, Soundcloud..)',
+      videoUrlPlaceholder: 'رابط الفيديو (YouTube, Vimeo..)',
+      podcastTitlePlaceholder: 'عنوان البودكاست',
+      videoTitlePlaceholder: 'عنوان الفيديو',
+      podcastDescPlaceholder: 'وصف مختصر للبودكاست...',
+      videoDescPlaceholder: 'وصف مختصر للفيديو...',
+      uploadPodcastImg: 'رفع غلاف البودكاست من الجهاز:',
+      uploadVideoImg: 'رفع غلاف الفيديو من الجهاز:',
+      mediaPositionLabel: 'أين ترغب في عرض الوسائط داخل المقال؟',
+      positionBottom: 'في الأسفل (تحت نص المقال)',
+      positionTop: 'في الأعلى (فوق نص المقال)',
+      relatedPodcast: 'بودكاست ذو صلة',
+      relatedVideos: 'فيديو ذو صلة',
+      multimediaTitle: 'إضافة وسائط تفاعلية للمقال (اختياري)',
+      imageAlreadyUploaded: 'توجد صورة مرفوعة مسبقاً',
+
       pendingArticles: 'المقالات المعلقة',
       approve: 'قبول',
       reject: 'رفض',
@@ -220,6 +259,25 @@ const resources = {
       approved: 'Onaylandı',
       rejected: 'Reddedildi',
       edit: 'Düzenle',
+
+      // Multimedia (New)
+      podcastSection: 'Podcast Bölümü',
+      videoSection: 'Video Bölümü',
+      podcastUrlPlaceholder: 'Podcast bağlantısı (Spotify, Soundcloud..)',
+      videoUrlPlaceholder: 'Video bağlantısı (YouTube, Vimeo..)',
+      podcastTitlePlaceholder: 'Podcast Başlığı',
+      videoTitlePlaceholder: 'Video Başlığı',
+      podcastDescPlaceholder: 'Podcast için kısa açıklama...',
+      videoDescPlaceholder: 'Video için kısa açıklama...',
+      uploadPodcastImg: 'Cihazdan podcast kapağı yükle:',
+      uploadVideoImg: 'Cihazdan video küçük resmi yükle:',
+      mediaPositionLabel: 'Medyayı makalenin neresinde göstermek istersiniz?',
+      positionBottom: 'Altta (Makale metninin altında)',
+      positionTop: 'Üstte (Makale metninin üstünde)',
+      relatedPodcast: 'ilgili podcast',
+      relatedVideos: 'ilgili videolar',
+      multimediaTitle: 'Multimedya Blokları Ekle (İsteğe Bağlı)',
+      imageAlreadyUploaded: 'Bir resim zaten yüklendi',
 
       pendingArticles: 'Bekleyen Makaleler',
       approve: 'Onayla',

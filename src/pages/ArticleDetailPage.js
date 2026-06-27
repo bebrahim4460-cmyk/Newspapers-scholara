@@ -4,6 +4,80 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { getArticleById } from '../services/articleService';
 
+// ==================== 🎙️ كارت البودكاست الاحترافي الجديد المترجم ====================
+function PodcastBlock({ podcast, isArabic, t }) {
+  if (!podcast || !podcast.url) return null;
+  return (
+    <div className="my-10 w-full" dir={isArabic ? 'rtl' : 'ltr'}>
+      {/* العنوان الصغير العلوي المترجم ديناميكياً */}
+      <span className="block text-[11px] font-mono font-bold text-gray-400 uppercase tracking-widest mb-3">
+        {t('relatedPodcast')}
+      </span>
+      
+      {/* الصورة هي الرابط الوحيد وبداخلها الأنيميشن الانسيابي */}
+      <a 
+        href={podcast.url} 
+        target="_blank" 
+        rel="noopener noreferrer"
+        className="block w-full overflow-hidden rounded bg-gray-100 group transition-transform duration-500 hover:scale-[1.015]"
+      >
+        <img 
+          src={podcast.imageUrl || 'https://via.placeholder.com/800x400'} 
+          alt={podcast.title} 
+          className="w-full h-auto max-h-[380px] object-cover filter brightness-95 group-hover:brightness-100 transition-all duration-500 shadow-sm"
+        />
+      </a>
+
+      {/* تفاصيل النص أسفل الصورة مباشرة */}
+      <div className="mt-4">
+        <h4 className="font-serif font-bold text-navy-900 text-xl md:text-2xl leading-snug">
+          {podcast.title}
+        </h4>
+        <p className="font-sans text-gray-500 text-sm md:text-base mt-2 leading-relaxed">
+          {podcast.description}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+// ==================== 📺 كارت الفيديو الاحترافي الجديد المترجم ====================
+function VideoBlock({ video, isArabic, t }) {
+  if (!video || !video.url) return null;
+  return (
+    <div className="my-10 w-full" dir={isArabic ? 'rtl' : 'ltr'}>
+      {/* العنوان الصغير العلوي المترجم ديناميكياً */}
+      <span className="block text-[11px] font-mono font-bold text-gray-400 uppercase tracking-widest mb-3">
+        {t('relatedVideos')}
+      </span>
+      
+      {/* الصورة هي الرابط وبداخلها الأنيميشن والانسيابية */}
+      <a 
+        href={video.url} 
+        target="_blank" 
+        rel="noopener noreferrer"
+        className="block w-full overflow-hidden rounded bg-gray-100 group transition-transform duration-500 hover:scale-[1.015]"
+      >
+        <img 
+          src={video.imageUrl || 'https://via.placeholder.com/800x400'} 
+          alt={video.title} 
+          className="w-full h-auto max-h-[380px] object-cover filter brightness-95 group-hover:brightness-100 transition-all duration-500 shadow-sm"
+        />
+      </a>
+
+      {/* تفاصيل النص أسفل الصورة مباشرة */}
+      <div className="mt-4">
+        <h4 className="font-serif font-bold text-navy-900 text-xl md:text-2xl leading-snug">
+          {video.title}
+        </h4>
+        <p className="font-sans text-gray-500 text-sm md:text-base mt-2 leading-relaxed">
+          {video.description}
+        </p>
+      </div>
+    </div>
+  );
+}
+
 export default function ArticleDetailPage() {
   const { id } = useParams();
   const { t } = useTranslation();
@@ -20,8 +94,6 @@ export default function ArticleDetailPage() {
         const data = await getArticleById(id);
         if (data) {
           setArticle(data);
-          // 📊 رادار المراقبة للتأكد من قيمة الرابط المخزن في الفايربيس
-          console.log("رابط الصورة القادم من الفايربيس لهذا المقال هو:", data.imageUrl || data.image || "❌ لا يوجد رابط (قيمة فارغة)");
         } else {
           setError('Article not found');
         }
@@ -61,7 +133,6 @@ export default function ArticleDetailPage() {
 
   const isArabic = article.language === 'ar';
 
-  // ✅ تحديد كلاسات تموضع الصورة بناءً على الاختيار (مع ضبط الهوامش للتفاف النص)
   let imageContainerClass = "w-full mb-6"; 
   if (article.imagePosition === 'right') {
     imageContainerClass = "w-full md:w-1/2 md:float-right md:ml-6 md:mb-4 mb-6";
@@ -69,7 +140,6 @@ export default function ArticleDetailPage() {
     imageContainerClass = "w-full md:w-1/2 md:float-left md:mr-6 md:mb-4 mb-6";
   }
 
-  // التحقق من الرابط بكل الأشكال الممكنة لضمان ألا تضيع الصورة
   const finalImageUrl = article.imageUrl || article.image;
 
   return (
@@ -110,19 +180,36 @@ export default function ArticleDetailPage() {
               alt={article.title} 
               className="w-full h-auto max-h-[500px] object-cover border border-gray-200 shadow-sm rounded bg-gray-50"
               onError={(e) => {
-                console.error("❌ الرابط تالف أو غير قادر على التحميل الفعلي من السيرفر:", finalImageUrl);
                 e.target.style.display = 'none'; 
               }}
             />
           </div>
         )}
 
-        {/* ✅ محتوى المقال - تمت إزالة clear-both من هنا ليلتف النص بحرية */}
+        {/* محتوى المقال مع الميديا التفاعلية المحدثة والمترجمة */}
         <div className="font-sans text-gray-800 text-base leading-relaxed whitespace-pre-line">
+          
+          {/* 1. عرض الميديا في الأعلى فوق النص إذا اختيرت */}
+          {article.mediaPosition === 'top' && (
+            <div className="space-y-6 mb-8 clear-both">
+              <PodcastBlock podcast={article.podcast} isArabic={isArabic} t={t} />
+              <VideoBlock video={article.video} isArabic={isArabic} t={t} />
+            </div>
+          )}
+
+          {/* نص المقال الأصلي */}
           {article.content}
+
+          {/* 2. عرض الميديا في الأسفل (الوضع النظيف والافتراضي) */}
+          {(article.mediaPosition === 'bottom' || !article.mediaPosition) && (
+            <div className="mt-10 space-y-6 border-t pt-6 border-gray-100 clear-both">
+              <PodcastBlock podcast={article.podcast} isArabic={isArabic} t={t} />
+              <VideoBlock video={article.video} isArabic={isArabic} t={t} />
+            </div>
+          )}
+
         </div>
 
-        {/* ✅ تنظيف الـ float في النهاية لضمان عدم خروج العناصر عن إطار الخلفية البيضاء */}
         <div className="clear-both" />
 
       </article>
